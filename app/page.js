@@ -2,18 +2,28 @@
 
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { CSSTransition } from "react-transition-group"
+import { CSSTransition } from 'react-transition-group'
 import { TeamCard } from '../components/teamCard'
 
 let array_elementos = [
-  'Fibra 50Mb',
-  'Fibra 100Mb',
-  'Fibra 200Mb',
-  'Fibra 300Mb',
-  'Fibra 600Mb',
-  'Fibra 1Gb',
-  'Indice 1',
-  'Indice 2'
+  'Ricard Fight',
+  'Caballero Yedai',
+  'Jero',
+  'Juan Piscifactoria',
+  'Di Maria',
+  'David Casa Fermina',
+  'Santi Busqui',
+  'Lucas Vazquez',
+  'Alex Maximiano',
+  'Reymon 60cent',
+  'Angel Lewan',
+  'Javi Pelapapas',
+  'Carlitos Macetas',
+  'David Requeten',
+  'Yisus Llenaaa',
+  'Gatico Macho',
+  'Dani Españolo',
+  'Enrique'
 ]
 
 function MainContainer () {
@@ -41,7 +51,7 @@ function MainContainer () {
     const grupo2 = []
     let controlGrupo = 0
 
-    const indice1 = array_elementos.indexOf('Indice 1')
+    const indice1 = array_elementos.indexOf('Di Maria')
     if (indice1 !== -1) {
       mitad1--
       const nombre = array_elementos[indice1]
@@ -59,7 +69,7 @@ function MainContainer () {
       array_elementos.splice(indice1, 1)
     }
 
-    const indice2 = array_elementos.indexOf('Indice 2')
+    const indice2 = array_elementos.indexOf('Alex Maximiano')
     if (indice2 !== -1) {
       mitad2--
       const nombre = array_elementos[indice2]
@@ -114,7 +124,7 @@ function MainContainer () {
           </button>
         </div>
 
-        <div className='flex flex-row place-items-center flex-wrap'>
+        <div className='flex flex-row place-items-center flex-wrap items-start'>
 
           <div className='flex flex-col'>
 
