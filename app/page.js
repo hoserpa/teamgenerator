@@ -179,17 +179,12 @@ function MainContainer () {
 
           </div>
 
-          <CSSTransition
-            in={state}
-            timeout={2000}
-            classNames="fade"
-            unmountOnExit
-          >
-            <div className='flex flex-row'>
-              <TeamCard title='Equipo Blanco' icon={true} elements={grupo1} />
-              <TeamCard title='Equipo Negro' elements={grupo2} />
-            </div>
-          </CSSTransition>
+
+          <div className='flex flex-row'>
+            <TeamCard title='Equipo Blanco' icon={true} elements={grupo1} />
+            <TeamCard title='Equipo Negro' elements={grupo2} />
+          </div>
+
         </div>
       </div>
 
