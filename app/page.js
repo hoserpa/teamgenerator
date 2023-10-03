@@ -1,8 +1,6 @@
 'use client'
 
-import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
-import { CSSTransition } from 'react-transition-group'
 import { TeamCard } from '../components/teamCard'
 
 let array_elementos = [
@@ -33,7 +31,6 @@ function MainContainer () {
   const [state, setState] = useState(false)
 
   const __remove = (id) => {
-    console.log(`Borrar ${id}`)
     const new_elementos = [...elementos]
     new_elementos.splice(id, 1)
     setElementos(new_elementos)
@@ -41,7 +38,6 @@ function MainContainer () {
 
   const __generate = () => {
     setState(false)
-    console.log("Generar")
 
     const mitad = elementos.length / 2
     let mitad1 = mitad
@@ -96,14 +92,11 @@ function MainContainer () {
     setGrupo1(grupo1)
     setGrupo2(grupo2)
 
-    console.log(grupo1)
-    console.log(grupo2)
-
     setState(true)
   }
 
   useEffect(() => {
-    console.log('Actualizado Elementos')
+
   }, [elementos])
 
 
@@ -114,78 +107,86 @@ function MainContainer () {
 
       <div className='flex flex-col place-items-center'>
 
-        <div className='w-full flex flex-row place-content-center m-10'>
-          <button
-            type="button"
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-            onClick={() => __generate()}
-          >
-            Generar
-          </button>
-        </div>
+        <div className='flex flex-row place-items-center flex-wrap items-start justify-center'>
 
-        <div className='flex flex-row place-items-center flex-wrap items-start'>
+          <div>
 
-          <div className='flex flex-col'>
+            <div className='flex flex-col'>
 
-            <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-[10] m-4">
-              {elementos.map((elemento, index) => (
-                <li key={elemento} className="flex justify-between gap-x-6 py-2">
-                  <div className="min-w-0 flex flex-wrap content-center">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">{elemento}</p>
-                  </div>
-                  <div className="flex flex-row">
-                    <button
-                      type="button"
-                      className="ml-2 rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-                      onClick={() => __remove(index)}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M4 7l16 0"></path>
-                        <path d="M10 11l0 6"></path>
-                        <path d="M14 11l0 6"></path>
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </li>
-              ))
-              }
-            </ul >
+              <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-[10] m-4">
+                {elementos.map((elemento, index) => (
+                  <li key={elemento} className="flex justify-between gap-x-6 py-2">
+                    <div className="min-w-0 flex flex-wrap content-center">
+                      <p className="text-sm font-semibold leading-6 text-gray-900">{elemento}</p>
+                    </div>
+                    <div className="flex flex-row">
+                      <button
+                        type="button"
+                        className="ml-2 rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                        onClick={() => __remove(index)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M4 7l16 0"></path>
+                          <path d="M10 11l0 6"></path>
+                          <path d="M14 11l0 6"></path>
+                          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </li>
+                ))
+                }
+              </ul >
 
-            <div className='flex flex-row-reverse mr-2'>
-              <button
-                type="button"
-                className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                onClick={() => {
-                  const text = prompt('Nombre Jugador')
-                  if (text) {
-                    let array_elementos = [...elementos]
-                    array_elementos.push(text)
-                    setElementos(array_elementos)
-                  }
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-square-rounded-plus" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-                  <path d="M15 12h-6"></path>
-                  <path d="M12 9v6"></path>
-                </svg>
-              </button>
+              <div className='flex flex-row-reverse mr-2'>
+                <button
+                  type="button"
+                  className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                  onClick={() => {
+                    const text = prompt('Nombre Jugador')
+                    if (text) {
+                      let array_elementos = [...elementos]
+                      array_elementos.push(text)
+                      setElementos(array_elementos)
+                    }
+                  }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-square-rounded-plus" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                    <path d="M15 12h-6"></path>
+                    <path d="M12 9v6"></path>
+                  </svg>
+                </button>
+              </div>
+
             </div>
 
           </div>
 
+          <div>
 
-          <div className='flex flex-row'>
-            <TeamCard title='Equipo Blanco' icon={true} elements={grupo1} />
-            <TeamCard title='Equipo Negro' elements={grupo2} />
+            <div className='flex flex-row place-content-center m-5'>
+              <button
+                type="button"
+                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                onClick={() => __generate()}
+              >
+                Generar
+              </button>
+            </div>
+
+            <div className='flex flex-row'>
+              <TeamCard title='Equipo Blanco' icon={true} elements={grupo1} />
+              <TeamCard title='Equipo Negro' elements={grupo2} />
+            </div>
           </div>
 
         </div>
+
+
       </div>
 
     </div >
@@ -195,7 +196,7 @@ function MainContainer () {
 export default function Home () {
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between px-6 py-24">
       { /* Cabecera */}
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
