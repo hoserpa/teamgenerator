@@ -26,14 +26,6 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.fade-appear {
-  opacity: 0;
-}
-.fade-appear.fade-appear-active {
-  opacity: 1;
-  transition: opacity 2000ms ease-in;
-}
-
 
 .fade-enter {
   opacity: 0;
