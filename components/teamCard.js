@@ -19,10 +19,9 @@ export function TeamCard ({ title, icon, elements }) {
       </div>
 
       <ul className='font-semibold text-gray-800'>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
+        {elements.map((elemento, index) => (
+          <li key={index}>{index + 1} - {elemento}</li>
+        ))}
       </ul>
 
     </div>
