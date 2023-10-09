@@ -20,7 +20,7 @@ export function TeamCard ({ title, icon, elements }) {
 
       <ul className='font-semibold text-gray-800'>
         {elements.map((elemento, index) => (
-          <li key={index}>{index + 1} - {elemento}</li>
+          elemento ? <li key={index}>{index + 1} - {elemento}</li> : ''
         ))}
       </ul>
 
