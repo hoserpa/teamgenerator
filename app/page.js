@@ -1,34 +1,36 @@
+/* eslint-disable react/react-in-jsx-scope */
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { TeamCard } from '../components/teamCard'
 
+
 let array_elementos = [
-  'Ricard Fight',
-  'Caballero Yedai',
-  'Jero',
-  'Juan Piscifactoria',
-  'Di Maria',
-  'David Casa Fermina',
-  'Santi Busqui',
-  'Lucas Vazquez',
-  'Alex Maximiano',
-  'Reymon 60cent',
-  'Angel Lewan',
-  'Javi Pelapapas',
-  'Carlitos Macetas',
-  'David Requeten',
-  'Yisus Llenaaa',
-  'Gatico Macho',
-  'Dani Españolo',
-  'Enrique'
+  ['Ricard Fight', false],
+  ['Caballero Yedai', false],
+  ['Jero', false],
+  ['Juan Piscifactoria', false],
+  ['Di Maria', true],
+  ['David Casa Fermina', false],
+  ['Santi Busqui', false],
+  ['Lucas Vazquez', false],
+  ['Alex Maximiano', true],
+  ['Reymon 60cent', false],
+  ['Angel Lewan', false],
+  ['Javi Pelapapas', false],
+  ['Carlitos Macetas', false],
+  ['David Requeten', false],
+  ['Yisus Llenaaa', false],
+  ['Gatico Macho', false],
+  ['Dani Españolo', false],
+  ['Enrique', false]
 ]
 
 function MainContainer () {
   const [elementos, setElementos] = useState(array_elementos)
   const [grupo1, setGrupo1] = useState([])
   const [grupo2, setGrupo2] = useState([])
-  const [state, setState] = useState(false)
+  const [list, setList] = useState([])
 
   const __remove = (id) => {
     const new_elementos = [...elementos]
@@ -37,7 +39,6 @@ function MainContainer () {
   }
 
   const __generate = () => {
-    setState(false)
 
     const mitad = elementos.length / 2
     let mitad1 = mitad
@@ -47,30 +48,37 @@ function MainContainer () {
     const grupo2 = []
     let controlGrupo = 0
 
-    const indice1 = array_elementos.indexOf('Di Maria')
-    if (indice1 !== -1) {
-      mitad1--
-      const nombre = array_elementos[indice1]
-      switch (Math.floor(Math.random() * 2)) {
-        case 0:
-          controlGrupo = 0
-          grupo1.push(nombre)
-          break;
+    const indiceP = array_elementos
+      .map((elemento, index) => array_elementos[index][1] ? index : undefined)
+      .filter(index => index !== undefined)
 
-        case 1:
-          controlGrupo = 1
-          grupo2.push(nombre)
-          break;
+    if (indiceP.length > 1) {
+
+      if (indiceP[0] !== undefined) {
+        mitad1--
+        const nombre = array_elementos[indiceP[0]][0]
+        switch (Math.floor(Math.random() * 2)) {
+          case 0:
+            controlGrupo = 0
+            grupo1.push(nombre)
+            break;
+
+          case 1:
+            controlGrupo = 1
+            grupo2.push(nombre)
+            break;
+        }
       }
-      array_elementos.splice(indice1, 1)
-    }
 
-    const indice2 = array_elementos.indexOf('Alex Maximiano')
-    if (indice2 !== -1) {
-      mitad2--
-      const nombre = array_elementos[indice2]
-      controlGrupo === 1 ? grupo1.push(nombre) : grupo2.push(nombre)
-      array_elementos.splice(indice2, 1)
+      if (indiceP[1] !== undefined) {
+        mitad2--
+        const nombre = array_elementos[indiceP[1]][0]
+        controlGrupo === 1 ? grupo1.push(nombre) : grupo2.push(nombre)
+      }
+
+      array_elementos.splice(indiceP[0], 1)
+      array_elementos.splice(indiceP[1] - 1, 1)
+
     }
 
     for (let i = 0; i < mitad1; i++) {
@@ -92,13 +100,32 @@ function MainContainer () {
     setGrupo1(grupo1)
     setGrupo2(grupo2)
 
-    setState(true)
+  }
+
+  const __generateList = () => {
+    const lineas = list.split('\n')
+
+    const nombres = []
+
+    lineas.forEach((linea) => {
+      const nombre = linea.replace(/^\d+\.\s*/, '').trim()
+      const keeper = nombre.toUpperCase() == 'JOSERRA' || nombre.toUpperCase() == 'ALEX' ? true : false
+      nombres.push([nombre, keeper])
+    })
+
+    setElementos(nombres)
   }
 
   useEffect(() => {
 
   }, [elementos])
 
+
+  const __selectKeeper = (index) => {
+    const new_elementos = [...elementos]
+    new_elementos[index][1] = !elementos[index][1]
+    setElementos(new_elementos)
+  }
 
 
   return (
@@ -108,6 +135,42 @@ function MainContainer () {
       <div className='flex flex-col place-items-center'>
 
         <div className='flex flex-row place-items-center flex-wrap items-start justify-center'>
+
+          <div>
+            <div className='flex flex-col'>
+              <div className='px-7 rounded-sm z-[10] m-4'>
+                <div
+                  className="overflow-hidden rounded-lg border border-gray-200 shadow-sm"
+                >
+                  <textarea
+                    id="OrderNotes"
+                    className="w-full resize-none border-none align-top focus:ring-0 sm:text-sm text-gray-700 p-4"
+                    rows="20"
+                    placeholder="Pegar lista..."
+                    onChange={e => setList(e.target.value)}
+                  ></textarea>
+
+                  <div className="flex items-center justify-end gap-2 bg-white p-3">
+                    <button
+                      type="button"
+                      className="text-gray-700 hover:text-gray-600 bg-gradient-to-r focus:ring-4 bg-gray-200 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                    >
+                      Clear
+                    </button>
+
+                    <button
+                      type="button"
+                      className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                      onClick={() => __generateList()}
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
 
           <div>
 
@@ -134,6 +197,59 @@ function MainContainer () {
                           <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
                         </svg>
                       </button>
+
+                      <div className='flex flex-col place-items-center ml-6'>
+
+                        <div className='mb-2'>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-hand-stop" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5" /><path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" /></svg>
+                        </div>
+
+                        <label
+                          htmlFor={"check" + index}
+                          className="relative h-6 w-14 cursor-pointer rounded-full bg-gray-500 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
+                        >
+                          <input
+                            type="checkbox"
+                            id={"check" + index}
+                            checked={elemento[1]}
+                            onChange={() => { __selectKeeper(index) }}
+                            className="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
+                          />
+
+                          <span
+                            className="absolute inset-y-0 start-0 z-10 m-1 inline-flex size-4 items-center justify-center rounded-full bg-white text-gray-400 transition-all peer-checked:start-6 peer-checked:text-green-600"
+                          >
+                            <svg
+                              data-unchecked-icon
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+
+                            <svg
+                              data-checked-icon
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="hidden h-4 w-4"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </label>
+                      </div>
+
                     </div>
                   </li>
                 ))
@@ -167,7 +283,6 @@ function MainContainer () {
           </div>
 
           <div>
-
             <div className='flex flex-row place-content-center m-5'>
               <button
                 type="button"
@@ -186,7 +301,6 @@ function MainContainer () {
 
         </div>
 
-
       </div>
 
     </div >
@@ -202,7 +316,7 @@ export default function Home () {
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           <span className='font-bold text-xl'>TEAM GENERATOR</span>
         </p>
-        <div className="flex flex-row items-center fixed bottom-0 left-0 h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+        <div className="flex flex-row items-center fixed bottom-0 left-0 h-48 w-full justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
 
           <div className='mr-1'>By </div><div><span className='font-bold' style={{ fontSize: 30, fontFamily: 'system-ui' }}>Hoserpa</span></div>
 
