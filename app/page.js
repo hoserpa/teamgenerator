@@ -1,11 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 'use client'
 
+<<<<<<< HEAD
 import { useState, useEffect } from 'react'
+=======
+import { useState, useRef, useEffect } from 'react'
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
 import { TeamCard } from '../components/teamCard'
 
 
 let array_elementos = [
+<<<<<<< HEAD
   ['Ricard Fight', false],
   ['Caballero Yedai', false],
   ['Jero', false],
@@ -24,13 +29,37 @@ let array_elementos = [
   ['Gatico Macho', false],
   ['Dani Españolo', false],
   ['Enrique', false]
+=======
+  'Ricard Fight',
+  'Caballero Yedai',
+  'Jero',
+  'Juan Piscifactoria',
+  'Di Maria',
+  'David Casa Fermina',
+  'Santi Busqui',
+  'Lucas Vazquez',
+  'Alex Maximiano',
+  'Reymon 60cent',
+  'Angel Lewan',
+  'Javi Pelapapas',
+  'Carlitos Macetas',
+  'David Requeten',
+  'Yisus Llenaaa',
+  'Gatico Macho',
+  'Dani Españolo',
+  'Enrique'
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
 ]
 
 function MainContainer () {
   const [elementos, setElementos] = useState(array_elementos)
   const [grupo1, setGrupo1] = useState([])
   const [grupo2, setGrupo2] = useState([])
+<<<<<<< HEAD
   const [list, setList] = useState([])
+=======
+  const [state, setState] = useState(false)
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
 
   const __remove = (id) => {
     const new_elementos = [...elementos]
@@ -39,6 +68,10 @@ function MainContainer () {
   }
 
   const __generate = () => {
+<<<<<<< HEAD
+=======
+    setState(false)
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
 
     const mitad = elementos.length / 2
     let mitad1 = mitad
@@ -48,6 +81,7 @@ function MainContainer () {
     const grupo2 = []
     let controlGrupo = 0
 
+<<<<<<< HEAD
     const indiceP = array_elementos
       .map((elemento, index) => array_elementos[index][1] ? index : undefined)
       .filter(index => index !== undefined)
@@ -79,6 +113,32 @@ function MainContainer () {
       array_elementos.splice(indiceP[0], 1)
       array_elementos.splice(indiceP[1] - 1, 1)
 
+=======
+    const indice1 = array_elementos.indexOf('Di Maria')
+    if (indice1 !== -1) {
+      mitad1--
+      const nombre = array_elementos[indice1]
+      switch (Math.floor(Math.random() * 2)) {
+        case 0:
+          controlGrupo = 0
+          grupo1.push(nombre)
+          break;
+
+        case 1:
+          controlGrupo = 1
+          grupo2.push(nombre)
+          break;
+      }
+      array_elementos.splice(indice1, 1)
+    }
+
+    const indice2 = array_elementos.indexOf('Alex Maximiano')
+    if (indice2 !== -1) {
+      mitad2--
+      const nombre = array_elementos[indice2]
+      controlGrupo === 1 ? grupo1.push(nombre) : grupo2.push(nombre)
+      array_elementos.splice(indice2, 1)
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
     }
 
     for (let i = 0; i < mitad1; i++) {
@@ -100,6 +160,7 @@ function MainContainer () {
     setGrupo1(grupo1)
     setGrupo2(grupo2)
 
+<<<<<<< HEAD
   }
 
   const __generateList = () => {
@@ -114,6 +175,9 @@ function MainContainer () {
     })
 
     setElementos(nombres)
+=======
+    setState(true)
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
   }
 
   useEffect(() => {
@@ -137,6 +201,7 @@ function MainContainer () {
         <div className='flex flex-row place-items-center flex-wrap items-start justify-center'>
 
           <div>
+<<<<<<< HEAD
             <div className='flex flex-col'>
               <div className='px-7 rounded-sm z-[10] m-4'>
                 <div
@@ -173,6 +238,8 @@ function MainContainer () {
           </div>
 
           <div>
+=======
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
 
             <div className='flex flex-col'>
 
@@ -283,6 +350,10 @@ function MainContainer () {
           </div>
 
           <div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
             <div className='flex flex-row place-content-center m-5'>
               <button
                 type="button"
@@ -301,6 +372,10 @@ function MainContainer () {
 
         </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
       </div>
 
     </div >
@@ -316,7 +391,11 @@ export default function Home () {
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           <span className='font-bold text-xl'>TEAM GENERATOR</span>
         </p>
+<<<<<<< HEAD
         <div className="flex flex-row items-center fixed bottom-0 left-0 h-48 w-full justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+=======
+        <div className="flex flex-row items-center fixed bottom-0 left-0 h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+>>>>>>> 183f582166ced762f87a964938bf3f915587fde3
 
           <div className='mr-1'>By </div><div><span className='font-bold' style={{ fontSize: 30, fontFamily: 'system-ui' }}>Hoserpa</span></div>
 
