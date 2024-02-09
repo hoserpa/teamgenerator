@@ -18,8 +18,9 @@
     "autoprefixer": "latest",
     "eslint": "^8.50.0",
     "eslint-config-next": "latest",
+    "eslint-plugin-react": "^7.33.2",
     "postcss": "latest",
-    "tailwindcss": "latest"
+    "tailwindcss": "^3.4.1"
   },
   "eslintConfig": {
     "extends": [
