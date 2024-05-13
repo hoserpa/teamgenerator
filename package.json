@@ -12,7 +12,8 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "autoprefixer": "latest",

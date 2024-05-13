@@ -3,6 +3,10 @@
 
 import { useState, useEffect } from 'react'
 import { TeamCard } from '../components/teamCard'
+import { v4 as uuidv4 } from 'uuid'
+
+const id = uuidv4();
+console.log(id);
 
 
 let array_elementos = [

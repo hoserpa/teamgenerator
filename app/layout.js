@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Team Generator',
-  description: 'Team Generator For Peña “¿Un Piquito?” Fútbol 7',
+  description: 'Team Generator Fútbol',
 }
 
 export default function RootLayout ({ children }) {
