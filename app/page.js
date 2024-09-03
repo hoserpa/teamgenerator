@@ -10,25 +10,26 @@ console.log(id);
 
 
 let array_elementos = [
-  ['Ricard Fight', false],
-  ['Caballero Yedai', false],
+  ['Juane', false],
+  ['Joserra', true],
+  ['Enrique', false],
+  ['Kike', false],
+  ['Dani Gato', false],
+  ['Lucas', false],
+  ['David', false],
   ['Jero', false],
-  ['Juan Piscifactoria', false],
-  ['Di Maria', true],
-  ['David Casa Fermina', false],
-  ['Santi Busqui', false],
-  ['Lucas Vazquez', false],
-  ['Alex Maximiano', true],
-  ['Reymon 60cent', false],
-  ['Angel Lewan', false],
-  ['Javi Pelapapas', false],
-  ['Carlitos Macetas', false],
-  ['David Requeten', false],
-  ['Yisus Llenaaa', false],
-  ['Gatico Macho', false],
-  ['Dani Españolo', false],
-  ['Enrique', false]
+  ['Juanjo', false],
+  ['Javi Alvarez', false],
+  ['Santi', false],
+  ['Alex', true],
+  ['Angel', false],
+  ['⁠Jose pana', false],
+  ['Dani', false],
+  ['Mario', false],
+  ['⁠Ramón', false],
+  ['⁠Javi', false]
 ]
+
 
 function MainContainer () {
   const [elementos, setElementos] = useState(array_elementos)
