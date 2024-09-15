@@ -113,7 +113,7 @@ function MainContainer () {
     const nombres = []
 
     lineas.forEach((linea) => {
-      const nombre = linea.replace(/\s/g, '').replace(/^\d+\.\s*/, '').trim()
+      const nombre = linea.replace(/\s/g, '').replace(/^\d+\.\s*/, '').replace(/,/g, '').replace(/[0-9]/g, '').trim()
       const keeper = nombre.toUpperCase() == 'JOSERRA' || nombre.toUpperCase() == 'ALEX' ? true : false
       nombres.push([nombre, keeper])
     })
@@ -151,7 +151,7 @@ function MainContainer () {
                     id="OrderNotes"
                     className="w-full resize-none border-none align-top focus:ring-0 sm:text-sm text-gray-700 p-4"
                     rows="20"
-                    placeholder="Pegar lista..."
+                    placeholder="Pegar lista de jugadores..."
                     onChange={e => setList(e.target.value)}
                   ></textarea>
 
