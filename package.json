@@ -13,6 +13,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-transition-group": "^4.4.5",
+    "team-creator": "file:",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

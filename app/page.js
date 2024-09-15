@@ -113,7 +113,7 @@ function MainContainer () {
     const nombres = []
 
     lineas.forEach((linea) => {
-      const nombre = linea.replace(/^\d+\.\s*/, '').trim()
+      const nombre = linea.replace(/\s/g, '').replace(/^\d+\.\s*/, '').trim()
       const keeper = nombre.toUpperCase() == 'JOSERRA' || nombre.toUpperCase() == 'ALEX' ? true : false
       nombres.push([nombre, keeper])
     })
@@ -299,8 +299,8 @@ function MainContainer () {
             </div>
 
             <div className='flex flex-row'>
-              <TeamCard title='Equipo Blanco' icon={true} elements={grupo1} />
-              <TeamCard title='Equipo Negro' elements={grupo2} />
+              <TeamCard title='Equipo Blanco' icon="white" elements={grupo1} />
+              <TeamCard title='Equipo LGBTI+' icon="color" elements={grupo2} />
             </div>
           </div>
 
