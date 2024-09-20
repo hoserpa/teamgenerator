@@ -23,10 +23,10 @@ let array_elementos = [
   ['Santi', false],
   ['Alex', true],
   ['Angel', false],
-  ['⁠Jose pana', false],
+  ['⁠Jose', false],
   ['Dani', false],
   ['Mario', false],
-  ['⁠Ramón', false],
+  ['Abel', false],
   ['⁠Carlos', false]
 ]
 
