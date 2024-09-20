@@ -10,9 +10,9 @@ export function TeamCard ({ title, icon, elements }) {
           {title}
         </p>
         <Image
-          src="/shirt.svg"
+          src={"/shirt-" + icon + ".svg"}
           alt="shirt"
-          className={"pl-2 " + (icon ? 'dark:invert ' : '')}
+          className={"pl-2 "}
           width={35}
           height={4}
           priority
