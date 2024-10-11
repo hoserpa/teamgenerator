@@ -26,7 +26,7 @@ let array_elementos = [
   ['⁠Jose', false],
   ['Dani', false],
   ['Mario', false],
-  ['Abel', false],
+  ['Migue', false],
   ['⁠Carlos', false]
 ]
 
