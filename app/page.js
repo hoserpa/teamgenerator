@@ -10,26 +10,25 @@ console.log(id);
 
 
 let array_elementos = [
-  ['Juane', false],
-  ['Joserra', true],
-  ['Enrique', false],
-  ['Kike', false],
-  ['Dani Gato', false],
-  ['Lucas', false],
-  ['David', false],
-  ['Jero', false],
-  ['Juanjo', false],
-  ['Javi', false],
-  ['Santi', false],
-  ['Alex', true],
-  ['Angel', false],
-  ['⁠Jose', false],
-  ['Dani', false],
-  ['Mario', false],
-  ['Migue', false],
-  ['⁠Carlos', false]
+  ['Juane', false, 88],
+  ['Joserra', true, 84],
+  ['Enrique', false, 87],
+  ['Kike', false, 83],
+  ['Dani Gato', false, 85],
+  ['Lucas', false, 88],
+  ['David', false, 86],
+  ['Jero', false, 85],
+  ['Juanjo', false, 83],
+  ['Javi', false, 86],
+  ['Santi', false, 87],
+  ['Alex', true, 89],
+  ['Angel', false, 88],
+  ['⁠Jose', false, 88],
+  ['Dani', false, 89],
+  ['Mario', false, 86],
+  ['Migue', false, 83],
+  ['⁠Carlos', false, 90]
 ]
-
 
 function MainContainer () {
   const [elementos, setElementos] = useState(array_elementos)
@@ -49,8 +48,8 @@ function MainContainer () {
     let mitad1 = mitad
     let mitad2 = mitad
     const array_elementos = [...elementos]
-    const grupo1 = []
-    const grupo2 = []
+    let grupo1 = []
+    let grupo2 = []
     let controlGrupo = 0
 
     const indiceP = array_elementos
@@ -61,24 +60,22 @@ function MainContainer () {
 
       if (indiceP[0] !== undefined) {
         mitad1--
-        const nombre = array_elementos[indiceP[0]][0]
         switch (Math.floor(Math.random() * 2)) {
           case 0:
             controlGrupo = 0
-            grupo1.push(nombre)
+            grupo1.push(array_elementos[indiceP[0]])
             break;
 
           case 1:
             controlGrupo = 1
-            grupo2.push(nombre)
+            grupo2.push(array_elementos[indiceP[0]])
             break;
         }
       }
 
       if (indiceP[1] !== undefined) {
         mitad2--
-        const nombre = array_elementos[indiceP[1]][0]
-        controlGrupo === 1 ? grupo1.push(nombre) : grupo2.push(nombre)
+        controlGrupo === 1 ? grupo1.push(array_elementos[indiceP[1]]) : grupo2.push(array_elementos[indiceP[1]])
       }
 
       array_elementos.splice(indiceP[0], 1)
@@ -100,6 +97,26 @@ function MainContainer () {
 
       grupo2.push(nombre)
       array_elementos.splice(indice, 1)
+    }
+
+    grupo1 = grupo1.filter(function (element) {
+      return element !== undefined;
+    });
+
+    grupo2 = grupo2.filter(function (element) {
+      return element !== undefined;
+    });
+
+    const mediaTeam1 = __media(grupo1.map(elemento => elemento[2]))
+    const mediaTeam2 = __media(grupo2.map(elemento => elemento[2]))
+
+    console.log(mediaTeam1)
+    console.log(mediaTeam2)
+
+    const diferencia = Math.abs(mediaTeam1 - mediaTeam2).toFixed(2)
+    console.log(diferencia)
+    if (diferencia > 0.5) {
+      __generate()
     }
 
     setGrupo1(grupo1)
@@ -129,6 +146,17 @@ function MainContainer () {
   const __selectKeeper = (index) => {
     const new_elementos = [...elementos]
     new_elementos[index][1] = !elementos[index][1]
+    setElementos(new_elementos)
+  }
+
+  const __media = (array) => {
+    const suma = array.reduce((a, b) => a + b, 0)
+    return (suma / array.length).toFixed(2)
+  }
+
+  const __updateMedia = (index, media) => {
+    const new_elementos = [...elementos]
+    new_elementos[index][2] = parseInt(media)
     setElementos(new_elementos)
   }
 
@@ -183,9 +211,9 @@ function MainContainer () {
 
               <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-[10] m-4">
                 {elementos.map((elemento, index) => (
-                  <li key={elemento} className="flex justify-between gap-x-6 py-2">
+                  <li key={elemento[0]} className="flex justify-between gap-x-6 py-2">
                     <div className="min-w-0 flex flex-wrap content-center">
-                      <p className="text-sm font-semibold leading-6 text-gray-900">{elemento}</p>
+                      <p className="text-sm font-semibold leading-6 text-gray-900">{elemento[0]}</p>
                     </div>
                     <div className="flex flex-row">
                       <button
@@ -206,7 +234,7 @@ function MainContainer () {
                       <div className='flex flex-col place-items-center ml-6'>
 
                         <div className='mb-2'>
-                          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-hand-stop" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5" /><path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" /></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-hand-stop text-gray-900" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5" /><path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" /></svg>
                         </div>
 
                         <label
@@ -255,6 +283,20 @@ function MainContainer () {
                         </label>
                       </div>
 
+                      <div className="min-w-0 flex flex-wrap content-center">
+                        <div className="input-group p-2 ml-6">
+                          <input
+                            type="number"
+                            id={"input" + index}
+                            className="form-control text-gray-900 font-semibold"
+                            style={{ width: 45, borderRadius: 5, padding: 5 }}
+                            placeholder="89"
+                            value={elemento[2]}
+                            onChange={e => { __updateMedia(index, e.target.value) }}
+                          />
+                        </div>
+                      </div>
+
                     </div>
                   </li>
                 ))
@@ -269,7 +311,7 @@ function MainContainer () {
                     const text = prompt('Nombre Jugador')
                     if (text) {
                       let array_elementos = [...elementos]
-                      array_elementos.push(text)
+                      array_elementos.push([text, false, 85])
                       setElementos(array_elementos)
                     }
                   }}
