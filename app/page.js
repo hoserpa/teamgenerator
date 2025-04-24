@@ -10,23 +10,23 @@ console.log(id);
 
 
 let array_elementos = [
-  ['Juane', false, 88],
-  ['Joserra', true, 85],
-  ['Enrique', false, 87],
-  ['Kike', false, 83],
-  ['Dani Gato', false, 85],
-  ['Lucas', false, 87],
-  ['David', false, 86],
-  ['Jero', false, 86],
-  ['Juanjo', false, 81],
-  ['Javi', false, 85],
-  ['Santi', false, 87],
+  ['Juane', false, 86],
+  ['Joserra', true, 79],
+  ['Enrique', false, 83],
+  ['Kike', false, 80],
+  ['Dani Gato', false, 80],
+  ['Lucas', false, 83],
+  ['David', false, 81],
+  ['Jero', false, 82],
+  ['Juanjo', false, 75],
+  ['Javi', false, 79],
+  ['Santi', false, 82],
   ['Alex', true, 89],
-  ['Angel', false, 87],
-  ['⁠Jose', false, 88],
+  ['Angel', false, 84],
+  ['⁠Jose', false, 86],
   ['Dani', false, 89],
-  ['Mario', false, 86],
-  ['Migue', false, 83],
+  ['Mario', false, 81],
+  ['Migue', false, 78],
   ['⁠Carlos', false, 90]
 ]
 
