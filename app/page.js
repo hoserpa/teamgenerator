@@ -10,24 +10,24 @@ console.log(id);
 
 
 let array_elementos = [
-  ['Juane', false, 86],
-  ['Joserra', true, 79],
-  ['Enrique', false, 83],
-  ['Kike', false, 80],
-  ['Dani Gato', false, 80],
-  ['Lucas', false, 83],
-  ['David', false, 81],
-  ['Jero', false, 82],
-  ['Juanjo', false, 75],
-  ['Javi', false, 79],
-  ['Santi', false, 82],
-  ['Alex', true, 89],
-  ['Angel', false, 84],
-  ['⁠Jose', false, 86],
-  ['Dani', false, 89],
-  ['Mario', false, 81],
-  ['Migue', false, 78],
-  ['⁠Carlos', false, 90]
+  ['Juane', false, 85],
+  ['Joserra', true, 50],
+  ['Enrique', false, 70],
+  ['Madrid', false, 30],
+  ['Ramon', false, 60],
+  ['Lucas', false, 70],
+  ['David', false, 45],
+  ['Jero', false, 80],
+  ['Juanjo', false, 0],
+  ['Javi', false, 30],
+  ['Santi', false, 70],
+  ['Pablo', true, 50],
+  ['Angel', false, 70],
+  ['⁠Maxi', false, 40],
+  ['Dani', false, 100],
+  ['Mario', false, 50],
+  ['Eric', false, 50],
+  ['⁠Carlos', false, 85]
 ]
 
 function MainContainer () {
@@ -115,7 +115,7 @@ function MainContainer () {
 
     const diferencia = Math.abs(mediaTeam1 - mediaTeam2).toFixed(2)
     console.log(diferencia)
-    if (diferencia > 0.5) {
+    if (diferencia > 5) {
       __generate()
     }
 
