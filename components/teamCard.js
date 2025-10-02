@@ -3,6 +3,9 @@ import React from 'react'
 import Image from 'next/image'
 
 export function TeamCard ({ title, icon, elements }) {
+  // Obtener basePath para imágenes
+  const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
+
   return (
     <div className="float-right divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-[10] m-4">
       <div className='flex items-center'>
@@ -10,7 +13,7 @@ export function TeamCard ({ title, icon, elements }) {
           {title}
         </p>
         <Image
-          src={"/shirt-" + icon + ".svg"}
+          src={`${basePath}/shirt-${icon}.svg`}
           alt="shirt"
           className={"pl-2 "}
           width={35}

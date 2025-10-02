@@ -10,8 +10,14 @@ export const metadata = {
 }
 
 export default function RootLayout ({ children }) {
+  // Usar directamente el basePath, sin hooks de cliente
+  const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
   return (
     <html lang="en">
+      <head>
+        {/* Ejemplo de uso de basePath en favicon */}
+        <link rel="icon" href={`${basePath}/favicon.ico`} />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
