@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function RootLayout ({ children }) {
   // Usar directamente el basePath, sin hooks de cliente
-  const basePath = (typeof window !== 'undefined' && window.location && window.location.pathname.startsWith('/teamgenerator')) ? '/teamgenerator' : ''
+  const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
   return (
     <html lang="en">
       <head>

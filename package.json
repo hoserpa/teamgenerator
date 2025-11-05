@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "clean": "rd /s /q .next 2>nul & rd /s /q out 2>nul",
-    "deploy": "npm run clean && npm run build && type nul > out\\.nojekyll && gh-pages -d out --dotfiles true"
+    "deploy": "npm run clean && npm run build && node create-nojekyll.js && npx gh-pages -d out --dotfiles"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.16",
@@ -26,7 +26,8 @@
     "eslint-plugin-react": "latest",
     "gh-pages": "latest",
     "postcss": "latest",
-    "tailwindcss": "latest"
+    "tailwindcss": "latest",
+    "touch-cli": "^0.0.1"
   },
   "eslintConfig": {
     "extends": [
