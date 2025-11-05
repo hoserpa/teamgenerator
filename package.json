@@ -11,6 +11,7 @@
     "deploy": "npm run clean && npm run build && type nul > out\\.nojekyll && gh-pages -d out --dotfiles true"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
@@ -20,12 +21,12 @@
   },
   "devDependencies": {
     "autoprefixer": "latest",
-    "eslint": "^8.50.0",
+    "eslint": "latest",
     "eslint-config-next": "latest",
-    "eslint-plugin-react": "^7.33.2",
-    "gh-pages": "^6.3.0",
+    "eslint-plugin-react": "latest",
+    "gh-pages": "latest",
     "postcss": "latest",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "latest"
   },
   "eslintConfig": {
     "extends": [

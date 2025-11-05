@@ -10,24 +10,24 @@ console.log(id);
 
 
 let array_elementos = [
-  ['Juane', false, 85],
+  ['Juane', false, 80],
   ['Joserra', true, 50],
   ['Enrique', false, 70],
   ['Madrid', false, 30],
   ['Ramon', false, 60],
   ['Lucas', false, 70],
   ['David', false, 45],
-  ['Jero', false, 80],
+  ['Jero', false, 75],
   ['Juanjo', false, 0],
   ['Javi', false, 30],
   ['Santi', false, 70],
   ['Pablo', true, 50],
   ['Angel', false, 70],
-  ['⁠Maxi', false, 40],
-  ['Dani', false, 100],
+  ['⁠Maxi', false, 20],
+  ['Dani', false, 90],
   ['Mario', false, 50],
-  ['Eric', false, 50],
-  ['⁠Carlos', false, 85]
+  ['Eric', false, 75],
+  ['⁠Carlos', false, 70]
 ]
 
 function MainContainer () {
@@ -35,6 +35,8 @@ function MainContainer () {
   const [grupo1, setGrupo1] = useState([])
   const [grupo2, setGrupo2] = useState([])
   const [list, setList] = useState([])
+  const [media1, setMedia1] = useState([])
+  const [media2, setMedia2] = useState([])
 
   const __remove = (id) => {
     const new_elementos = [...elementos]
@@ -51,6 +53,8 @@ function MainContainer () {
     let grupo1 = []
     let grupo2 = []
     let controlGrupo = 0
+    let mediaTeam1 = 0
+    let mediaTeam2 = 0
 
     const indiceP = array_elementos
       .map((elemento, index) => array_elementos[index][1] ? index : undefined)
@@ -107,20 +111,23 @@ function MainContainer () {
       return element !== undefined;
     });
 
-    const mediaTeam1 = __media(grupo1.map(elemento => elemento[2]))
-    const mediaTeam2 = __media(grupo2.map(elemento => elemento[2]))
+    mediaTeam1 = __media(grupo1.map(elemento => elemento[2]))
+    mediaTeam2 = __media(grupo2.map(elemento => elemento[2]))
 
     console.log(mediaTeam1)
     console.log(mediaTeam2)
 
     const diferencia = Math.abs(mediaTeam1 - mediaTeam2).toFixed(2)
     console.log(diferencia)
-    if (diferencia > 5) {
-      __generate()
-    }
 
     setGrupo1(grupo1)
     setGrupo2(grupo2)
+    setMedia1(mediaTeam1)
+    setMedia2(mediaTeam2)
+    if (diferencia > 1) {
+      __generate()
+      return
+    }
 
   }
 
@@ -128,11 +135,17 @@ function MainContainer () {
     const lineas = list.split('\n')
 
     const nombres = []
+    const defaultMedia = 50
 
     lineas.forEach((linea) => {
       const nombre = linea.replace(/\s/g, '').replace(/^\d+\.\s*/, '').replace(/,/g, '').replace(/[0-9]/g, '').trim()
-      const keeper = nombre.toUpperCase() == 'JOSERRA' || nombre.toUpperCase() == 'ALEX' ? true : false
-      nombres.push([nombre, keeper])
+      if (!nombre) return
+      const keeper = nombre.toUpperCase() == 'JOSERRA' || nombre.toUpperCase() == 'PABLO' ? true : false
+
+      const existente = array_elementos.find(el => el && el[0] && el[0].toString().toUpperCase() === nombre.toUpperCase())
+      const media = existente ? (typeof existente[2] !== 'undefined' ? existente[2] : defaultMedia) : defaultMedia
+
+      nombres.push([nombre, keeper, media])
     })
 
     setElementos(nombres)
@@ -163,7 +176,7 @@ function MainContainer () {
 
   return (
 
-    <div className="relative flex flex-row place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]" >
+    <div className="relative flex flex-row place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-60 after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-linear-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]" >
 
       <div className='flex flex-col place-items-center'>
 
@@ -171,13 +184,13 @@ function MainContainer () {
 
           <div>
             <div className='flex flex-col'>
-              <div className='px-7 rounded-sm z-[10] m-4'>
+              <div className='px-7 rounded-sm z-10 m-4'>
                 <div
                   className="overflow-hidden rounded-lg border border-gray-200 shadow-sm"
                 >
                   <textarea
                     id="OrderNotes"
-                    className="w-full resize-none border-none align-top focus:ring-0 sm:text-sm text-gray-700 p-4"
+                    className="w-full resize-none border-none align-top focus:ring-0 sm:text-sm text-gray-700 p-4 bg-white"
                     rows="20"
                     placeholder="Pegar lista de jugadores..."
                     onChange={e => setList(e.target.value)}
@@ -186,14 +199,14 @@ function MainContainer () {
                   <div className="flex items-center justify-end gap-2 bg-white p-3">
                     <button
                       type="button"
-                      className="text-gray-700 hover:text-gray-600 bg-gradient-to-r focus:ring-4 bg-gray-200 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                      className="text-gray-700 hover:text-gray-600 bg-linear-to-r focus:ring-4 bg-gray-200 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                     >
                       Clear
                     </button>
 
                     <button
                       type="button"
-                      className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                      className="text-white bg-linear-to-r from-green-400 via-green-500 to-green-600 hover:bg-linear-to-r focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                       onClick={() => __generateList()}
                     >
                       Add
@@ -209,7 +222,7 @@ function MainContainer () {
 
             <div className='flex flex-col'>
 
-              <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-[10] m-4">
+              <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-10 m-4">
                 {elementos.map((elemento, index) => (
                   <li key={elemento[0]} className="flex justify-between gap-x-6 py-2">
                     <div className="min-w-0 flex flex-wrap content-center">
@@ -218,7 +231,7 @@ function MainContainer () {
                     <div className="flex flex-row">
                       <button
                         type="button"
-                        className="ml-2 rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                        className="ml-2 rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                         onClick={() => __remove(index)}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -239,14 +252,14 @@ function MainContainer () {
 
                         <label
                           htmlFor={"check" + index}
-                          className="relative h-6 w-14 cursor-pointer rounded-full bg-gray-500 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
+                          className="relative h-6 w-14 cursor-pointer rounded-full bg-gray-500 transition [-webkit-tap-highlight-color:transparent] has-checked:bg-green-500"
                         >
                           <input
                             type="checkbox"
                             id={"check" + index}
                             checked={elemento[1]}
                             onChange={() => { __selectKeeper(index) }}
-                            className="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
+                            className="peer sr-only [&:checked+span_svg[data-checked-icon]]:block [&:checked+span_svg[data-unchecked-icon]]:hidden"
                           />
 
                           <span
@@ -306,7 +319,7 @@ function MainContainer () {
               <div className='flex flex-row-reverse mr-2'>
                 <button
                   type="button"
-                  className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                  className="text-white bg-linear-to-r from-green-400 via-green-500 to-green-600 hover:bg-linear-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                   onClick={() => {
                     const text = prompt('Nombre Jugador')
                     if (text) {
@@ -333,7 +346,7 @@ function MainContainer () {
             <div className='flex flex-row place-content-center m-5'>
               <button
                 type="button"
-                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                className="text-white bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-linear-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                 onClick={() => __generate()}
               >
                 Generar
@@ -341,8 +354,8 @@ function MainContainer () {
             </div>
 
             <div className='flex flex-row'>
-              <TeamCard title='Equipo Blanco' icon="white" elements={grupo1} />
-              <TeamCard title='Equipo LGBTI+' icon="color" elements={grupo2} />
+              <TeamCard title='Equipo Blanco' icon="white" elements={grupo1} media={media1} />
+              <TeamCard title='Equipo LGBTI+' icon="color" elements={grupo2} media={media2} />
             </div>
           </div>
 
@@ -360,10 +373,10 @@ export default function Home () {
     <main className="flex min-h-screen flex-col items-center justify-between px-6 py-24">
       { /* Cabecera */}
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-linear-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           <span className='font-bold text-xl'>TEAM GENERATOR</span>
         </p>
-        <div className="flex flex-row items-center fixed bottom-0 left-0 h-48 w-full justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+        <div className="flex flex-row items-center fixed bottom-0 left-0 h-48 w-full justify-center bg-linear-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
 
           <div className='mr-1'>By </div><div><span className='font-bold' style={{ fontSize: 30, fontFamily: 'system-ui' }}>Hoserpa</span></div>
 
