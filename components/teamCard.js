@@ -3,11 +3,10 @@ import React from 'react'
 import Image from 'next/image'
 
 export function TeamCard ({ title, icon, elements, media }) {
-  // Obtener basePath para imágenes
-  const basePath = process.env.NEXT_PUBLIC_NODE_ENV === 'production' ? '/teamgenerator' : ''
+  const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
 
   return (
-    <div className="float-right divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-[10] m-4">
+    <div className="float-right divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-10 m-4">
       <div className='flex items-center pb-2'>
         <p className="text-md font-semibold leading-6 text-gray-900">
           {title}

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "cross-env NODE_ENV=development next dev",
+    "build": "cross-env NODE_ENV=production next build",
+    "start": "cross-env NODE_ENV=production next start",
     "lint": "next lint",
     "clean": "rd /s /q .next 2>nul & rd /s /q out 2>nul",
     "deploy": "npm run clean && npm run build && node create-nojekyll.js && npx gh-pages -d out --dotfiles"
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "autoprefixer": "latest",
+    "cross-env": "^10.1.0",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "eslint-plugin-react": "latest",

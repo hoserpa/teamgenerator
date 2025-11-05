@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 const id = uuidv4();
 console.log(id);
+console.log('Version', '1.0.4')
+console.log(process.env.NODE_ENV)
 
 
 let array_elementos = [
