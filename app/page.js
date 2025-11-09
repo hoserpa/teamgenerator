@@ -3,12 +3,14 @@
 
 import { useState, useEffect } from 'react'
 import { TeamCard } from '../components/teamCard'
+import Image from 'next/image'
 import { v4 as uuidv4 } from 'uuid'
 
 const id = uuidv4();
 console.log(id);
 console.log('Version', '1.0.4')
 console.log(process.env.NODE_ENV)
+const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
 
 
 let array_elementos = [
@@ -39,6 +41,10 @@ function MainContainer () {
   const [list, setList] = useState([])
   const [media1, setMedia1] = useState([])
   const [media2, setMedia2] = useState([])
+  const [cuotas, setCuotas] = useState({
+    A: { A: '', Empate: '', B: '' },
+    B: { A: '', Empate: '', B: '' }
+  })
 
   const __remove = (id) => {
     const new_elementos = [...elementos]
@@ -126,6 +132,9 @@ function MainContainer () {
     setGrupo2(grupo2)
     setMedia1(mediaTeam1)
     setMedia2(mediaTeam2)
+
+    setCuotas(__calcularCuota(mediaTeam1, mediaTeam2))
+
     if (diferencia > 1) {
       __generate()
       return
@@ -174,6 +183,46 @@ function MainContainer () {
     new_elementos[index][2] = parseInt(media)
     setElementos(new_elementos)
   }
+
+  const __calcularCuota = (QA, QB, sensibilidad = 20, margen = 0.05) => {
+    const pA_base = 1 / (1 + Math.pow(10, (QB - QA) / sensibilidad))
+    const pB_base = 1 - pA_base
+
+    const diferencia = Math.abs(QA - QB)
+    const pEmpate_base = Math.max(0.05, 0.3 - (diferencia / 200))
+
+    const total = pA_base + pB_base + pEmpate_base
+    const pA = pA_base / total
+    const pB = pB_base / total
+    const pEmpate = pEmpate_base / total
+
+    const cuotaA_sin = 1 / pA
+    const cuotaEmpate_sin = 1 / pEmpate
+    const cuotaB_sin = 1 / pB
+
+    const pA_m = pA * (1 - margen)
+    const pB_m = pB * (1 - margen)
+    const pEmpate_m = pEmpate * (1 - margen)
+
+    const cuotaA_con = 1 / pA_m
+    const cuotaEmpate_con = 1 / pEmpate_m
+    const cuotaB_con = 1 / pB_m
+
+    return {
+      A: {
+        A: cuotaA_sin.toFixed(2),
+        Empate: cuotaEmpate_sin.toFixed(2),
+        B: cuotaB_sin.toFixed(2)
+      },
+      B: {
+        A: cuotaA_con.toFixed(2),
+        Empate: cuotaEmpate_con.toFixed(2),
+        B: cuotaB_con.toFixed(2)
+      }
+    }
+  }
+
+
 
 
   return (
@@ -358,6 +407,80 @@ function MainContainer () {
             <div className='flex flex-row'>
               <TeamCard title='Equipo Blanco' icon="white" elements={grupo1} media={media1} />
               <TeamCard title='Equipo LGBTI+' icon="color" elements={grupo2} media={media2} />
+            </div>
+
+            <div className='flex flex-row'>
+              <div className='divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-10 m-4 w-full'>
+                <p className="text-md font-semibold leading-6 text-gray-900 pb-1">
+                  Cuotas
+                </p>
+                <table className="table-coutas table-auto border-collapse w-full text-gray-800">
+                  <thead>
+                    <tr className='text-xs font-medium'>
+                      <th></th>
+                      <th>1</th>
+                      <th>X</th>
+                      <th>2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Image
+                          src={`${basePath}/80-16.png`}
+                          alt="shirt"
+                          className={"rounded-lg h-auto w-[75px]"}
+                          width={35}
+                          height={4}
+                          priority
+                        />
+                      </td>
+                      <td>
+                        <span className='bg-gray-800 text-gray-300 py-1 px-4 rounded-lg'>
+                          {cuotas.A.A}
+                        </span>
+                      </td>
+                      <td>
+                        <span className='bg-gray-800 text-gray-300 py-1 px-4 rounded-lg'>
+                          {cuotas.A.Empate}
+                        </span>
+                      </td>
+                      <td>
+                        <span className='bg-gray-800 text-gray-300 py-1 px-4 rounded-lg'>
+                          {cuotas.A.B}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Image
+                          src={`${basePath}/80-406.png`}
+                          alt="shirt"
+                          className={"rounded-lg h-auto w-[75px]"}
+                          width={35}
+                          height={4}
+                          priority
+                        />
+                      </td>
+                      <td>
+                        <span className='bg-gray-800 text-gray-300 py-1 px-4 rounded-lg'>
+                          {cuotas.B.A}
+                        </span>
+                      </td>
+                      <td>
+                        <span className='bg-gray-800 text-gray-300 py-1 px-4 rounded-lg'>
+                          {cuotas.B.Empate}
+                        </span>
+                      </td>
+                      <td>
+                        <span className='bg-gray-800 text-gray-300 py-1 px-4 rounded-lg'>
+                          {cuotas.B.B}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
