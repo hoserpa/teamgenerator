@@ -16,22 +16,22 @@ const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
 let array_elementos = [
   ['Juane', false, 80],
   ['Joserra', true, 50],
-  ['Enrique', false, 70],
-  ['Madrid', false, 30],
+  ['Enrique', false, 65],
+  ['Madrid', false, 20],
   ['Ramon', false, 60],
-  ['Lucas', false, 70],
-  ['David', false, 45],
-  ['Jero', false, 75],
-  ['Juanjo', false, 0],
-  ['Javi', false, 30],
+  ['Lucas', false, 65],
+  ['David', false, 40],
+  ['Jero', false, 70],
+  ['Juanjo', false, 5],
+  ['Javi', false, 25],
   ['Santi', false, 70],
   ['Pablo', true, 50],
   ['Angel', false, 70],
-  ['⁠Maxi', false, 20],
-  ['Dani', false, 90],
-  ['Mario', false, 50],
-  ['Eric', false, 75],
-  ['⁠Carlos', false, 70]
+  ['⁠Maxi', false, 10],
+  ['Dani', false, 85],
+  ['Mario', false, 25],
+  ['Eric', false, 85],
+  ['⁠Carlos', false, 65]
 ]
 
 function MainContainer () {
@@ -406,7 +406,7 @@ function MainContainer () {
 
             <div className='flex flex-row'>
               <TeamCard title='Equipo Blanco' icon="white" elements={grupo1} media={media1} />
-              <TeamCard title='Equipo LGBTI+' icon="color" elements={grupo2} media={media2} />
+              <TeamCard title='Equipo Negro' icon="black" elements={grupo2} media={media2} />
             </div>
 
             <div className='flex flex-row'>
