@@ -14,24 +14,24 @@ const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
 
 
 let array_elementos = [
-  ['Juane', false, 80],
+  ['Juane', false, 50],
   ['Joserra', true, 50],
-  ['Enrique', false, 65],
-  ['Madrid', false, 20],
-  ['Ramon', false, 60],
-  ['Lucas', false, 65],
-  ['David', false, 40],
-  ['Jero', false, 70],
-  ['Juanjo', false, 5],
-  ['Javi', false, 25],
-  ['Santi', false, 70],
+  ['Enrique', false, 50],
+  ['Madrid', false, 50],
+  ['Ramon', false, 50],
+  ['Lucas', false, 50],
+  ['David', false, 50],
+  ['Jero', false, 50],
+  ['Juanjo', false, 50],
+  ['Javi', false, 50],
+  ['Santi', false, 50],
   ['Pablo', true, 50],
-  ['Angel', false, 70],
-  ['⁠Maxi', false, 10],
-  ['Dani', false, 85],
-  ['Mario', false, 25],
-  ['Eric', false, 85],
-  ['⁠Carlos', false, 65]
+  ['Angel', false, 50],
+  ['⁠Maxi', false, 50],
+  ['Dani', false, 50],
+  ['Mario', false, 50],
+  ['Eric', false, 50],
+  ['⁠Carlos', false, 50]
 ]
 
 function MainContainer () {
