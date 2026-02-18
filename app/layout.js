@@ -7,6 +7,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Team Generator',
   description: 'Team Generator Fútbol',
+  icons: {
+    icon: { url: '/icon.png', type: 'image/png' },
+    apple: { url: '/icon.png' },
+  },
 }
 
 export default function RootLayout ({ children }) {
@@ -14,8 +18,9 @@ export default function RootLayout ({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Ejemplo de uso de basePath en favicon */}
-        <link rel="icon" href={`${basePath}/favicon.ico`} />
+        <link rel="icon" type="image/png" href={`${basePath}/icon.png`} />
+        <link rel="apple-touch-icon" href={`${basePath}/icon.png`} />
+        <meta name="apple-mobile-web-app-title" content="Team Generator" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
