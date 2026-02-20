@@ -21,6 +21,13 @@ export default function RootLayout ({ children }) {
         <link rel="icon" type="image/png" href={`${basePath}/icon.png`} />
         <link rel="apple-touch-icon" href={`${basePath}/icon.png`} />
         <meta name="apple-mobile-web-app-title" content="Team Generator" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <meta name="theme-color" content="#121212" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
