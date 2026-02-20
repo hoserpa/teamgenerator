@@ -7,10 +7,6 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Team Generator',
   description: 'Team Generator Fútbol',
-  icons: {
-    icon: { url: '/icon.png', type: 'image/png' },
-    apple: { url: '/icon.png' },
-  },
 }
 
 export const viewport = {
