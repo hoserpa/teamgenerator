@@ -13,6 +13,13 @@ export const metadata = {
   },
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export default function RootLayout ({ children }) {
   const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
   return (
@@ -20,14 +27,11 @@ export default function RootLayout ({ children }) {
       <head>
         <link rel="icon" type="image/png" href={`${basePath}/icon.png`} />
         <link rel="apple-touch-icon" href={`${basePath}/icon.png`} />
-        <meta name="apple-mobile-web-app-title" content="Team Generator" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
         <meta name="theme-color" content="#121212" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="manifest" href={`${basePath}/manifest.json`} />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
