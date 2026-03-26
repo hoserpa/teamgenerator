@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.16",
-    "next": "^16.3.0",
+    "next": "^16.2.1",
     "react": "latest",
     "react-dom": "latest",
     "react-transition-group": "^4.4.5",
@@ -23,7 +23,7 @@
     "autoprefixer": "latest",
     "cross-env": "^10.1.0",
     "eslint": "latest",
-    "eslint-config-next": "latest",
+    "eslint-config-next": "^16.2.1",
     "eslint-plugin-react": "latest",
     "gh-pages": "latest",
     "postcss": "latest",
@@ -35,5 +35,8 @@
       "standard"
     ]
   },
-  "homepage": "https://hoserpa.github.io/teamgenerator"
+  "homepage": "https://hoserpa.github.io/teamgenerator",
+  "overrides": {
+    "picomatch": "^4.0.4"
+  }
 }
