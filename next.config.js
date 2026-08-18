@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   output: 'export',
   basePath: process.env.NODE_ENV === 'production' ? '/teamgenerator' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/teamgenerator/' : '',

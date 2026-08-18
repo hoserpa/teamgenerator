@@ -1,19 +1,12 @@
-/* eslint-disable react/react-in-jsx-scope */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { TeamCard } from '../components/teamCard'
 import Image from 'next/image'
-import { v4 as uuidv4 } from 'uuid'
 
-const id = uuidv4();
-console.log(id);
-console.log('Version', '1.0.4')
-console.log(process.env.NODE_ENV)
 const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
 
-
-let array_elementos = [
+const DEFAULT_PLAYERS = [
   ['Juane', false, 50],
   ['Joserra', true, 50],
   ['Enrique', false, 50],
@@ -27,20 +20,22 @@ let array_elementos = [
   ['Santi', false, 50],
   ['Pablo', true, 50],
   ['Angel', false, 50],
-  ['⁠Maxi', false, 50],
+  ['Maxi', false, 50],
   ['Dani', false, 50],
   ['Mario', false, 50],
   ['Eric', false, 50],
-  ['⁠Carlos', false, 50]
+  ['Carlos', false, 50]
 ]
 
+const MAX_RETRIES = 100
+
 function MainContainer () {
-  const [elementos, setElementos] = useState(array_elementos)
+  const [elementos, setElementos] = useState(DEFAULT_PLAYERS)
   const [grupo1, setGrupo1] = useState([])
   const [grupo2, setGrupo2] = useState([])
-  const [list, setList] = useState([])
-  const [media1, setMedia1] = useState([])
-  const [media2, setMedia2] = useState([])
+  const [list, setList] = useState('')
+  const [media1, setMedia1] = useState('')
+  const [media2, setMedia2] = useState('')
   const [cuotas, setCuotas] = useState({
     A: { A: '', Empate: '', B: '' },
     B: { A: '', Empate: '', B: '' }
@@ -52,136 +47,10 @@ function MainContainer () {
     setElementos(new_elementos)
   }
 
-  const __generate = () => {
-
-    const mitad = elementos.length / 2
-    let mitad1 = mitad
-    let mitad2 = mitad
-    const array_elementos = [...elementos]
-    let grupo1 = []
-    let grupo2 = []
-    let controlGrupo = 0
-    let mediaTeam1 = 0
-    let mediaTeam2 = 0
-
-    const indiceP = array_elementos
-      .map((elemento, index) => array_elementos[index][1] ? index : undefined)
-      .filter(index => index !== undefined)
-
-    if (indiceP.length > 1) {
-
-      if (indiceP[0] !== undefined) {
-        mitad1--
-        switch (Math.floor(Math.random() * 2)) {
-          case 0:
-            controlGrupo = 0
-            grupo1.push(array_elementos[indiceP[0]])
-            break;
-
-          case 1:
-            controlGrupo = 1
-            grupo2.push(array_elementos[indiceP[0]])
-            break;
-        }
-      }
-
-      if (indiceP[1] !== undefined) {
-        mitad2--
-        controlGrupo === 1 ? grupo1.push(array_elementos[indiceP[1]]) : grupo2.push(array_elementos[indiceP[1]])
-      }
-
-      array_elementos.splice(indiceP[0], 1)
-      array_elementos.splice(indiceP[1] - 1, 1)
-
-    }
-
-    for (let i = 0; i < mitad1; i++) {
-      const indice = Math.floor(Math.random() * array_elementos.length)
-      const nombre = array_elementos[indice]
-
-      grupo1.push(nombre)
-      array_elementos.splice(indice, 1)
-    }
-
-    for (let i = 0; i < mitad2; i++) {
-      const indice = Math.floor(Math.random() * array_elementos.length)
-      const nombre = array_elementos[indice]
-
-      grupo2.push(nombre)
-      array_elementos.splice(indice, 1)
-    }
-
-    grupo1 = grupo1.filter(function (element) {
-      return element !== undefined;
-    });
-
-    grupo2 = grupo2.filter(function (element) {
-      return element !== undefined;
-    });
-
-    mediaTeam1 = __media(grupo1.map(elemento => elemento[2]))
-    mediaTeam2 = __media(grupo2.map(elemento => elemento[2]))
-
-    console.log(mediaTeam1)
-    console.log(mediaTeam2)
-
-    const diferencia = Math.abs(mediaTeam1 - mediaTeam2).toFixed(2)
-    console.log(diferencia)
-
-    setGrupo1(grupo1)
-    setGrupo2(grupo2)
-    setMedia1(mediaTeam1)
-    setMedia2(mediaTeam2)
-
-    setCuotas(__calcularCuota(mediaTeam1, mediaTeam2))
-
-    if (diferencia > 1) {
-      __generate()
-      return
-    }
-
-  }
-
-  const __generateList = () => {
-    const lineas = list.split('\n')
-
-    const nombres = []
-    const defaultMedia = 50
-
-    lineas.forEach((linea) => {
-      const nombre = linea.replace(/\s/g, '').replace(/^\d+\.\s*/, '').replace(/,/g, '').replace(/[0-9]/g, '').trim()
-      if (!nombre) return
-      const keeper = nombre.toUpperCase() == 'JOSERRA' || nombre.toUpperCase() == 'PABLO' ? true : false
-
-      const existente = array_elementos.find(el => el && el[0] && el[0].toString().toUpperCase() === nombre.toUpperCase())
-      const media = existente ? (typeof existente[2] !== 'undefined' ? existente[2] : defaultMedia) : defaultMedia
-
-      nombres.push([nombre, keeper, media])
-    })
-
-    setElementos(nombres)
-  }
-
-  useEffect(() => {
-
-  }, [elementos])
-
-
-  const __selectKeeper = (index) => {
-    const new_elementos = [...elementos]
-    new_elementos[index][1] = !elementos[index][1]
-    setElementos(new_elementos)
-  }
-
   const __media = (array) => {
+    if (!array.length) return 0
     const suma = array.reduce((a, b) => a + b, 0)
-    return (suma / array.length).toFixed(2)
-  }
-
-  const __updateMedia = (index, media) => {
-    const new_elementos = [...elementos]
-    new_elementos[index][2] = parseInt(media)
-    setElementos(new_elementos)
+    return suma / array.length
   }
 
   const __calcularCuota = (QA, QB, sensibilidad = 20, margen = 0.05) => {
@@ -222,8 +91,107 @@ function MainContainer () {
     }
   }
 
+  const __generate = () => {
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      const array_elementos = [...elementos]
+      const mitad = Math.floor(array_elementos.length / 2)
+      let mitad1 = mitad
+      let mitad2 = array_elementos.length - mitad
+      const g1 = []
+      const g2 = []
+      let controlGrupo = 0
 
+      const indiceP = array_elementos
+        .map((elemento, index) => array_elementos[index][1] ? index : undefined)
+        .filter(index => index !== undefined)
 
+      if (indiceP.length > 1) {
+        if (indiceP[0] !== undefined) {
+          mitad1--
+          if (Math.floor(Math.random() * 2) === 0) {
+            controlGrupo = 0
+            g1.push(array_elementos[indiceP[0]])
+          } else {
+            controlGrupo = 1
+            g2.push(array_elementos[indiceP[0]])
+          }
+        }
+
+        if (indiceP[1] !== undefined) {
+          mitad2--
+          controlGrupo === 1 ? g1.push(array_elementos[indiceP[1]]) : g2.push(array_elementos[indiceP[1]])
+        }
+
+        array_elementos.splice(indiceP[0], 1)
+        array_elementos.splice(indiceP[1] - 1, 1)
+      }
+
+      for (let i = 0; i < mitad1; i++) {
+        const indice = Math.floor(Math.random() * array_elementos.length)
+        g1.push(array_elementos[indice])
+        array_elementos.splice(indice, 1)
+      }
+
+      for (let i = 0; i < mitad2; i++) {
+        const indice = Math.floor(Math.random() * array_elementos.length)
+        g2.push(array_elementos[indice])
+        array_elementos.splice(indice, 1)
+      }
+
+      const grupo1Final = g1.filter(element => element !== undefined)
+      const grupo2Final = g2.filter(element => element !== undefined)
+
+      const mediaTeam1 = __media(grupo1Final.map(elemento => elemento[2]))
+      const mediaTeam2 = __media(grupo2Final.map(elemento => elemento[2]))
+      const diferencia = Math.abs(mediaTeam1 - mediaTeam2)
+
+      setGrupo1(grupo1Final)
+      setGrupo2(grupo2Final)
+      setMedia1(mediaTeam1.toFixed(2))
+      setMedia2(mediaTeam2.toFixed(2))
+      setCuotas(__calcularCuota(mediaTeam1, mediaTeam2))
+
+      if (diferencia <= 1) return
+    }
+  }
+
+  const __generateList = useCallback(() => {
+    const lineas = list.split('\n')
+    const nombres = []
+    const defaultMedia = 50
+
+    lineas.forEach((linea) => {
+      const nombre = linea.replace(/\s/g, '').replace(/^\d+\.\s*/, '').replace(/,/g, '').replace(/[0-9]/g, '').trim()
+      if (!nombre) return
+      const keeper = nombre.toUpperCase() === 'JOSERRA' || nombre.toUpperCase() === 'PABLO'
+
+      const existente = DEFAULT_PLAYERS.find(el => el && el[0] && el[0].toString().toUpperCase() === nombre.toUpperCase())
+      const media = existente ? (typeof existente[2] !== 'undefined' ? existente[2] : defaultMedia) : defaultMedia
+
+      nombres.push([nombre, keeper, media])
+    })
+
+    if (nombres.length > 0) {
+      setElementos(nombres)
+    }
+  }, [list])
+
+  const __selectKeeper = (index) => {
+    const new_elementos = elementos.map((el, i) =>
+      i === index ? [el[0], !el[1], el[2]] : el
+    )
+    setElementos(new_elementos)
+  }
+
+  const __updateMedia = (index, media) => {
+    const parsed = parseInt(media, 10)
+    if (isNaN(parsed)) return
+    const clamped = Math.max(0, Math.min(100, parsed))
+    const new_elementos = elementos.map((el, i) =>
+      i === index ? [el[0], el[1], clamped] : el
+    )
+    setElementos(new_elementos)
+  }
 
   return (
 
@@ -245,12 +213,14 @@ function MainContainer () {
                     rows="20"
                     placeholder="Pegar lista de jugadores..."
                     onChange={e => setList(e.target.value)}
+                    value={list}
                   ></textarea>
 
                   <div className="flex items-center justify-end gap-2 bg-white p-3">
                     <button
                       type="button"
                       className="text-gray-700 hover:text-gray-600 bg-linear-to-r focus:ring-4 bg-gray-200 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                      onClick={() => setList('')}
                     >
                       Clear
                     </button>
@@ -275,7 +245,7 @@ function MainContainer () {
 
               <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-10 m-4">
                 {elementos.map((elemento, index) => (
-                  <li key={elemento[0]} className="flex justify-between gap-x-6 py-2">
+                  <li key={`${elemento[0]}-${index}`} className="flex justify-between gap-x-6 py-2">
                     <div className="min-w-0 flex flex-wrap content-center">
                       <p className="text-sm font-semibold leading-6 text-gray-900">{elemento[0]}</p>
                     </div>
@@ -355,6 +325,8 @@ function MainContainer () {
                             className="form-control text-gray-900 font-semibold"
                             style={{ width: 45, borderRadius: 5, padding: 5 }}
                             placeholder="89"
+                            min="0"
+                            max="100"
                             value={elemento[2]}
                             onChange={e => { __updateMedia(index, e.target.value) }}
                           />
@@ -373,10 +345,10 @@ function MainContainer () {
                   className="text-white bg-linear-to-r from-green-400 via-green-500 to-green-600 hover:bg-linear-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                   onClick={() => {
                     const text = prompt('Nombre Jugador')
-                    if (text) {
-                      let array_elementos = [...elementos]
-                      array_elementos.push([text, false, 85])
-                      setElementos(array_elementos)
+                    if (text && text.trim()) {
+                      const nombre = text.trim()
+                      const new_elementos = [...elementos, [nombre, false, 85]]
+                      setElementos(new_elementos)
                     }
                   }}
                 >
