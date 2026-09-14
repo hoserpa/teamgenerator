@@ -40,6 +40,7 @@ function MainContainer () {
     A: { A: '', Empate: '', B: '' },
     B: { A: '', Empate: '', B: '' }
   })
+  const [newPlayer, setNewPlayer] = useState('')
 
   const __remove = (id) => {
     const new_elementos = [...elementos]
@@ -152,6 +153,15 @@ function MainContainer () {
       setCuotas(__calcularCuota(mediaTeam1, mediaTeam2))
 
       if (diferencia <= 1) return
+    }
+  }
+
+  const __addPlayer = () => {
+    const text = newPlayer.trim()
+    if (text) {
+      const new_elementos = [...elementos, [text, false, 50]]
+      setElementos(new_elementos)
+      setNewPlayer('')
     }
   }
 
@@ -339,18 +349,11 @@ function MainContainer () {
                 }
               </ul >
 
-              <div className='flex flex-row-reverse mr-2'>
+              <div className='flex flex-row-reverse items-center mr-2'>
                 <button
                   type="button"
                   className="text-white bg-linear-to-r from-green-400 via-green-500 to-green-600 hover:bg-linear-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                  onClick={() => {
-                    const text = prompt('Nombre Jugador')
-                    if (text && text.trim()) {
-                      const nombre = text.trim()
-                      const new_elementos = [...elementos, [nombre, false, 85]]
-                      setElementos(new_elementos)
-                    }
-                  }}
+                  onClick={() => __addPlayer()}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-square-rounded-plus" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -359,6 +362,14 @@ function MainContainer () {
                     <path d="M12 9v6"></path>
                   </svg>
                 </button>
+                <input
+                  type="text"
+                  className="mr-2 mb-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400"
+                  placeholder="Nombre Jugador"
+                  value={newPlayer}
+                  onChange={e => setNewPlayer(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') __addPlayer() }}
+                />
               </div>
 
             </div>

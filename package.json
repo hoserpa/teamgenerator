@@ -6,8 +6,8 @@
     "dev": "cross-env NODE_ENV=development next dev",
     "build": "cross-env NODE_ENV=production next build",
     "start": "cross-env NODE_ENV=production next start",
-    "lint": "next lint",
-    "clean": "rm -rf .next out",
+    "lint": "eslint .",
+    "clean": "rd /s /q .next 2>nul & rd /s /q out 2>nul",
     "deploy": "npm run clean && npm run build && node create-nojekyll.js && npx gh-pages -d out --dotfiles"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://hoserpa.github.io/teamgenerator",
   "overrides": {
-    "picomatch": "^4.0.4"
+    "picomatch": "^4.0.4",
+    "js-yaml": "^4.3.2"
   }
 }
