@@ -8,23 +8,23 @@ const basePath = process.env.NODE_ENV === 'production' ? '/teamgenerator' : ''
 
 const DEFAULT_PLAYERS = [
   ['Juane', false, 50],
-  ['Joserra', true, 50],
   ['Enrique', false, 50],
-  ['Madrid', false, 50],
-  ['Ramon', false, 50],
-  ['Lucas', false, 50],
-  ['David', false, 50],
   ['Jero', false, 50],
+  ['Tonythepumas', false, 50],
+  ['Madrid', false, 50],
+  ['Pepino', false, 50],
+  ['⁠Josem', false, 50],
+  ['⁠Mario', false, 50],
+  ['Paco', false, 50],
+  ['Antonio', true, 50],
+  ['⁠Eric', false, 50],
+  ['⁠Joserra', true, 50],
   ['Juanjo', false, 50],
-  ['Javi', false, 50],
-  ['Santi', false, 50],
-  ['Pablo', true, 50],
+  ['J Álvarez', false, 50],
+  ['David', false, 50],
   ['Angel', false, 50],
-  ['Maxi', false, 50],
-  ['Dani', false, 50],
-  ['Mario', false, 50],
-  ['Eric', false, 50],
-  ['Carlos', false, 50]
+  ['Charlitros', false, 50],
+  ['Lucas', false, 50]
 ]
 
 const MAX_RETRIES = 100
@@ -195,12 +195,16 @@ function MainContainer () {
 
   const __updateMedia = (index, media) => {
     const parsed = parseInt(media, 10)
-    if (isNaN(parsed)) return
-    const clamped = Math.max(0, Math.min(100, parsed))
-    const new_elementos = elementos.map((el, i) =>
-      i === index ? [el[0], el[1], clamped] : el
-    )
-    setElementos(new_elementos)
+    const value = Number.isNaN(parsed) ? '' : Math.max(0, Math.min(100, parsed))
+    setElementos(current => current.map((el, i) =>
+      i === index ? [el[0], el[1], value] : el
+    ))
+  }
+
+  const __commitMedia = (index) => {
+    setElementos(current => current.map((el, i) =>
+      i === index && el[2] === '' ? [el[0], el[1], 50] : el
+    ))
   }
 
   return (
@@ -209,7 +213,7 @@ function MainContainer () {
 
       <div className='flex flex-col place-items-center'>
 
-        <div className='flex flex-row place-items-center flex-wrap items-start justify-center'>
+        <div className='flex flex-row place-items-center flex-wrap items-start justify-center gap-4'>
 
           <div>
             <div className='flex flex-col'>
@@ -249,20 +253,20 @@ function MainContainer () {
             </div>
           </div>
 
-          <div>
+          <div className="w-full sm:w-auto">
 
             <div className='flex flex-col'>
 
-              <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-10 m-4">
+              <ul role="list" className="divide-y divide-gray-200 bg-gray-300 py-4 px-7 rounded-sm z-10 my-4 sm:mx-4 w-full sm:w-auto">
                 {elementos.map((elemento, index) => (
-                  <li key={`${elemento[0]}-${index}`} className="flex justify-between gap-x-6 py-2">
+                  <li key={`${elemento[0]}-${index}`} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-2">
                     <div className="min-w-0 flex flex-wrap content-center">
                       <p className="text-sm font-semibold leading-6 text-gray-900">{elemento[0]}</p>
                     </div>
-                    <div className="flex flex-row">
+                    <div className="flex min-w-0 flex-wrap items-center justify-end gap-2 sm:gap-4">
                       <button
                         type="button"
-                        className="ml-2 rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                        className="rounded-md bg-red-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                         onClick={() => __remove(index)}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -275,7 +279,7 @@ function MainContainer () {
                         </svg>
                       </button>
 
-                      <div className='flex flex-col place-items-center ml-6'>
+                      <div className='flex shrink-0 flex-col place-items-center'>
 
                         <div className='mb-2'>
                           <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-hand-stop text-gray-900" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5" /><path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5" /><path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" /></svg>
@@ -327,20 +331,38 @@ function MainContainer () {
                         </label>
                       </div>
 
-                      <div className="min-w-0 flex flex-wrap content-center">
-                        <div className="input-group p-2 ml-6">
-                          <input
-                            type="number"
-                            id={"input" + index}
-                            className="form-control text-gray-900 font-semibold"
-                            style={{ width: 45, borderRadius: 5, padding: 5 }}
-                            placeholder="89"
-                            min="0"
-                            max="100"
-                            value={elemento[2]}
-                            onChange={e => { __updateMedia(index, e.target.value) }}
-                          />
-                        </div>
+                      <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                        <button
+                          type="button"
+                          aria-label={`Reducir media de ${elemento[0]} en un punto`}
+                          className="inline-flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-md border border-gray-300 bg-white text-xl font-semibold leading-none text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 active:bg-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => { __updateMedia(index, Number(elemento[2] || 0) - 1) }}
+                        >
+                          −
+                        </button>
+
+                        <input
+                          type="number"
+                          id={"input" + index}
+                          aria-label={`Media de ${elemento[0]}`}
+                          className="form-control h-11 w-12 rounded-[5px] border border-gray-300 bg-white p-1 text-center text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="89"
+                          min="0"
+                          max="100"
+                          step="1"
+                          value={elemento[2]}
+                          onChange={e => { __updateMedia(index, e.target.value) }}
+                          onBlur={() => { __commitMedia(index) }}
+                        />
+
+                        <button
+                          type="button"
+                          aria-label={`Aumentar media de ${elemento[0]} en un punto`}
+                          className="inline-flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-md border border-gray-300 bg-white text-xl font-semibold leading-none text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 active:bg-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+                          onClick={() => { __updateMedia(index, Number(elemento[2] || 0) + 1) }}
+                        >
+                          +
+                        </button>
                       </div>
 
                     </div>
